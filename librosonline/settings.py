@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
     # apps terceros
     "captcha",
     # mis apps
@@ -81,6 +82,8 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_DEBUG = True
+
 WSGI_APPLICATION = "librosonline.wsgi.application"
 
 
@@ -88,10 +91,14 @@ WSGI_APPLICATION = "librosonline.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'utn1',
+        'USER': 'juanito',
+        'PASSWORD': 'utn!DJANGO',
+        'HOST':'localhost',
+        'PORT':'3306',
+        }
 }
 
 
