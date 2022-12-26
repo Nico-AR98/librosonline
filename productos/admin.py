@@ -1,83 +1,84 @@
-from http.client import HTTPResponse
 from django.contrib import admin
-from productos.models import Categoria
-from productos.models import Producto
-from django.http import HttpResponse
-from django.core import serializers
-from django.shortcuts import render
+from productos.models.categoria import Categoria
+from productos.models.producto import Producto
+from productos.models.producto import ImagenProducto
 
-class ProductoInline(admin.TabularInline):
+# ************************************************
+# * CATEGORIA
+# ************************************************
+class Categoriaadmin(admin.ModelAdmin):
 
-    model = Producto
+    list_display = ["nombre", "slug", "orden" ]
+    list_filter = ["nombre"]
+
+# ************************************************
+# * PRODUTOS
+# ************************************************
+class ImagenProductoInline(admin.TabularInline):
+
+    model = ImagenProducto
     extra = 0
 
-class CategoriaAdmin(admin.ModelAdmin):
-    inlines = [ProductoInline]
-
-
-
-@admin.register(Producto)
-class ProductoAdmin(admin.ModelAdmin):
-    #fields =['categoria', 'fecha_publicacion', 'producto', 'imagen']
-
+class Productoadmin(admin.ModelAdmin):
     fieldsets = [
         ("Relación", {"fields": ["categoria"]}),
+        ("ARTICULO", {"fields": ["articulo"]}),
+        ("PESO", {"fields": ["peso"]}),
         (
             "Datos generales",
             {
                 "fields": [
-                    'fecha_publicacion', 'producto', 'estado' , 'imagen', 'descripcion'
+                    "name",
+                    # "nombre",
+                    # "slug",
+                    "imagen",
+                    "descripcion",
+                    "composicion",
+
                 ]
             },
         ),
         (
-            "Datos económicos",
-            {
-                "fields": [
-                    'precio', 'stock', 'descuento',
-                ]
-            },
+            "Datos Monetarios",
+            {"fields": ["precio", "descuento", "stock"]},
         ),
-
+        ("Condición", {"fields": ["estado"]}),
     ]
-    list_display = ['producto', 'fecha_publicacion', 'tipo_de_producto', 'imagen', 'upper_case_name']
-    ordering = ['-fecha_publicacion']
-    list_filter = ('producto', 'fecha_publicacion',)
-    search_fields=('producto', 'estado',)
-    list_display_links = ('producto', 'fecha_publicacion',)
-    actions=["publicar", "exportar_a_json", "ver_productos"]
-    @admin.display(description='Name')
-    def upper_case_name(self, obj):
-        return ("%s %s" % (obj.producto, obj.estado)).upper()
+    list_display = [
+        "articulo",
+        "name",
+        "peso",
+        "slug",
+        "estado_de_producto",
+        "categorias_del_producto",
+    ]
+    list_filter = ["name", ]
+
+    inlines = [ImagenProductoInline,]
+    readonly_fields = ("estado",)
+    actions = [
+        "publicar",
+        "pasar_a_borrador",
+        "pasar_a_retirado",
+    ]
+
 
     def publicar(self, request, queryset):
-        registro = queryset.update(estado="Publicado")
+        queryset.update(estado="Publicado")
 
-        if registro == 1:
-            mensaje = "1 registro actualizado"
-        else:
-            mensaje = "%s registros actualizados" % registro
-        self.message_user(request, "%s exitosamente" % mensaje)
+    publicar.short_description = "Pasar a estado Publicado"
 
-    publicar.short_description = "Pasar a publicado"
+    def pasar_a_borrador(self, request, queryset):
+        queryset.update(estado="Borrador")
 
-    def exportar_a_json(self, request, queryset):
-        response = HttpResponse(content_type="application/json") 
-        serializers.serialize("json", queryset, stream=response)
-        return response
- 
-    def ver_productos(self, request, queryset):
-        params={}
-        productos=Producto.objects.all
-        params["productos"]=productos
-        return render(request, "admin/productos/productos.html", params)
+    pasar_a_borrador.short_description = "Pasar a estado Borrador"
 
-    ver_productos.short_description = "ver productos" 
+    def pasar_a_retirado(self, request, queryset):
+        queryset.update(estado="Retirado")
 
-#admin.site.register(Producto, ProductoAdmin)
-admin.site.register(Categoria, CategoriaAdmin)
+    pasar_a_retirado.short_description = "Pasar a estado Retirado"
 
-
-#admin.site.register(Categoria)
-#admin.site.register(Producto)
- 
+# ========= VAN COMENTADAS INICIO ===========================================
+admin.site.register(Categoria, Categoriaadmin)
+# ========= VAN COMENTADAS FIN ===========================================
+admin.site.register(Producto, Productoadmin)
