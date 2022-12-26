@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.sites",
-    "registration",  # should be immediately above 'django.contrib.admin'
+    #"registration",  # should be immediately above 'django.contrib.admin'
     # apps por defecto
     "django.contrib.admin",
     "django.contrib.auth",
