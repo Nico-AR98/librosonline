@@ -22,7 +22,7 @@ urlpatterns = [
     path("", include("vistaprevia.urls")),
     #path("accounts/", include("registration.backends.default.urls")),
     path("admin/", admin.site.urls),
-    #path("captcha/", include("captcha.urls")),
+    path("captcha/", include("captcha.urls")),
     path("contacto/", include("contacto.urls")),
     path("tienda/", include("tienda.urls")),
     path("usuarios/", include("usuarios.urls")),
