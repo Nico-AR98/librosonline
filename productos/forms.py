@@ -8,7 +8,7 @@ class SearchLibroForm(forms.Form):
 
 
 
-class CargarForm(ModelForm):
+"""class CargarForm(ModelForm):
     class Meta:
         model = Producto
         fields = ["producto", "fecha_publicacion", "imagen"]
@@ -25,4 +25,4 @@ class CargarForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(CargarForm, self).__init__(*args, **kwargs)
+        super(CargarForm, self).__init__(*args, **kwargs)"""

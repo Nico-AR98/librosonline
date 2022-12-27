@@ -1,5 +1,4 @@
 from django.urls import path
-from vistaprevia import views
 from vistaprevia.views import Templatetags1
 from vistaprevia.views import BuscarLibro
 from vistaprevia.views import BuscarLibro2
