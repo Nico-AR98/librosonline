@@ -1,3 +1,4 @@
+'''
 from django.urls import path
 from tienda import views
 from tienda import views_agregar
@@ -11,3 +12,5 @@ urlpatterns = [
     path('ejemplo_localstorage/', EjemploLocalSotage.as_view(), name="ejemplo_localstorage"),
     path("agregar/", views_agregar.agregar, name="agregar"),
 ]
+
+'''
