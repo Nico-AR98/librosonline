@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from productos.models import Producto
-from tienda.forms import CargarForm
+#from tienda.forms import CargarForm
 from django.http import Http404
 from django.views.generic import View
 
-
+'''
 def cargar_imagen(request):
     params={}
 
@@ -24,7 +24,7 @@ def cargar_imagen(request):
     else:
         form = CargarForm()
         params['form'] = form
-        return render(request, 'tienda/formulario.html', params)
+        return render(request, 'tienda/formulario.html', params)'''
 
 
 class VerImagenes(View): 
