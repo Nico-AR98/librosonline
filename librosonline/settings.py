@@ -47,6 +47,11 @@ INSTALLED_APPS = [
     # apps terceros
     "captcha",
     # mis apps
+    "carro.apps.CarroConfig",
+    "pagos.apps.PagosConfig",
+    "presentacion.apps.PresentacionConfig",
+    "pedidos.apps.PedidosConfig",
+    "transporte.apps.TransporteConfig",
     "contacto.apps.ContactoConfig",
     "productos.apps.ProductosConfig",
     "vistaprevia.apps.VistapreviaConfig",
